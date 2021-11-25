@@ -2,6 +2,7 @@ package http
 
 import (
 	"example/micro/model"
+	"example/micro/repository"
 
 	"log"
 	"net/http"
@@ -9,6 +10,7 @@ import (
 	"encoding/json"
 )
 
+// post a suka
 func postFunction(w http.ResponseWriter, r *http.Request) {
 	decoder := json.NewDecoder(r.Body)
 	var suka model.Suka
@@ -16,14 +18,17 @@ func postFunction(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		panic(err)
 	}
+	suka, err = repository.CreateSuka(suka)
 	log.Println(suka)
 }
 
+// get all sukas
 func getFunction(w http.ResponseWriter, r *http.Request) {
-	log.Println("You called a thing")
-	suka := &model.Suka{Name: "Suka", Surname: "Suka2"}
+	// suka := &model.Suka{Name: "Suka", Surname: "Suka2"}
 
-	payload, err := json.Marshal(suka)
+	sukas, err := repository.FindAllSuka()
+
+	payload, err := json.Marshal(sukas)
 	if err != nil {
 		log.Println(err)
 	}

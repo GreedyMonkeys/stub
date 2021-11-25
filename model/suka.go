@@ -3,6 +3,7 @@ package model
 import "encoding/json"
 
 type Suka struct {
+	Id      int
 	Name    string
 	Surname string
 }
